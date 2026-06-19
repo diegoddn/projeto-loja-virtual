@@ -8,23 +8,24 @@ import { useState, type ChangeEvent, type FormEvent } from "react";
 
 export function Produto() {
     const [filtrar, setFiltrar] = useState("");
+    const [produtosFiltrados, setProdutosFiltrados] = useState(listaDeProdutos);
 
-    let filtrarTexto = "";
-    
-    // Enquanto digita essa função é executada
-    function handleFiltrarProdutos (event: ChangeEvent<HTMLInputElement>) {
-        filtrarTexto = event.target.value.toLowerCase()
-        setFilrar(`Produto: ${filtrarTexto}`)
+    function handleFiltrarProdutos(event: ChangeEvent<HTMLInputElement>) {
+        setFiltrar(event.target.value);
     }
-    
-    // Quando clico em filtrar essa função é executada
+
     function handleSubmit(event: FormEvent) {
-        event.preventDefault()
-    
-        const filtroProdutos = listaDeProdutos.filter((produto) => produto.titulo?.toLowerCase().includes(filtrarTexto))
-        
-        setSubmit(filtroProdutos)
+        event.preventDefault();
+
+        const filtroProdutos = listaDeProdutos.filter((produto) =>
+            produto.titulo?.toLowerCase().includes(filtrar.toLowerCase())
+        );
+
+        setProdutosFiltrados(filtroProdutos);
     }
+
+
+
     return (
         <>     
         <h2>Produtos em Destaque</h2>
@@ -32,12 +33,13 @@ export function Produto() {
         <form onSubmit={handleSubmit}>
             <input type="text" 
             placeholder="Filtrar produtos" 
-            onChange={(e) => setFiltrar(e.target.value)}
+            value={filtrar}
+            onChange={handleFiltrarProdutos}
             />
+            <button type="submit">Filtrar</button>
         </form>
-        <button>Filtrar</button>
 
-        {listaDeProdutos.map((produto) => 
+        {produtosFiltrados.map((produto) => 
         <Produtos
             key = {produto.id}
             id={produto.id}
