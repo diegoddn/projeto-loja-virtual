@@ -1,5 +1,5 @@
 import { useState, type ReactNode } from "react";
-import { Adicionar, Botao, Container } from "./styles"
+import { Adicionar, Container } from "./styles"
 import { Link } from "react-router-dom";
 
 interface CardProps {
@@ -11,7 +11,7 @@ interface CardProps {
 }
 
 function handleAdd(titulo: string) {
-    alert(`${titulo} adicinado ao carrinho`)
+    alert(`${titulo} adicionado ao carrinho`)
 }
 
 export function Produtos({
@@ -25,10 +25,9 @@ export function Produtos({
     const [count, setCount] = useState<number>(0);
 
     const handleMais = () => {
-        
-        if(count < 10) (
+        if (count < 10) {
             setCount(count + 1)
-        )
+        }
     }
 
     const handleMenos = () => {
@@ -48,7 +47,7 @@ export function Produtos({
                         <h3><Link to={`/produtos/${id}`}>{titulo}</Link></h3>
                         <p>{descricao}</p>
                         <Adicionar>
-                        <button>Adicionar</button>
+                        <button onClick={() => handleAdd(titulo)}>Adicionar</button>
                         <button onClick={handleMenos}>-</button>
                         <p>{count}</p>
                         <button onClick={handleMais}>+</button>
